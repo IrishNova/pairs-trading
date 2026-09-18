@@ -1,0 +1,23 @@
+# Virtual environment
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Data — do not commit raw/cached price data
+data/
+*.parquet
+*.csv
+
+# Environment / secrets
+.env
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,16 @@
+# Core numerics
+numpy
+pandas
+scipy
+
+# Econometrics — cointegration (Engle-Granger), ADF, OLS
+statsmodels
+
+# Data source: equities daily closes
+yfinance
+
+# Plotting (spread/z-score charts for README)
+matplotlib
+
+# Notebook exploration
+jupyter
