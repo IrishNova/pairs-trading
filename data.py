@@ -36,7 +36,7 @@ def order_pair(data):
     return independent, dependent
 
 
-def fetch_raw_data(tickers):
+def fetch_raw_data(tickers, period="max"):
     """
     Fetch split/dividend-adjusted daily closing prices for a single pair, align
     them onto a common date index, and order the columns by liquidity.
@@ -66,7 +66,7 @@ def fetch_raw_data(tickers):
     export = {}
     for t in tickers:
         export[t] = yf.download(tickers=t,
-                                period='max',
+                                period=period,
                                 multi_level_index=False,
                                 auto_adjust=True)[['Close', 'Volume']]
 
