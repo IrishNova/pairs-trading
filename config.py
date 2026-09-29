@@ -21,6 +21,24 @@ TRADING_DAYS_PER_YEAR = 252   # annualization factor for Sharpe
 BORROW_DAY_COUNT = 360        # IBKR accrues borrow fees on a 360-day basis
 UNIT_SIZE = 1000              # shares of the dependent leg per position (indep leg = gamma * UNIT_SIZE)
 
+# Stage 1: candidate universe screened for prospects. Stage 2: the ones selected
+# for full validation (in-sample backtest + walk-forward).
+CANDIDATE_PAIRS = [
+    ("PM", "MO"),
+    ("KO", "PEP"),
+    ("MA", "V"),
+    ("XOM", "CVX"),
+    ("HD", "LOW"),
+    ("AGNC", "NLY"),
+    ("TRV", "ALL"),
+    ("WM", "RSG"),
+    ("AAPL", "MSFT"),
+]
+
+PROSPECTS = [
+    ("PM", "MO"),
+]
+
 # ---------------------------------------------------------------------------
 # Per-leg cost model
 # ---------------------------------------------------------------------------

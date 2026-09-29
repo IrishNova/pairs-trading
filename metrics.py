@@ -36,7 +36,7 @@ def min_return(pnl):
 
 
 def semi_deviation(pnl, mar=0.0):
-    downside = pnl[pnl < mar] - mar
+    downside = np.minimum(pnl - mar, 0)
     return np.sqrt((downside ** 2).mean())
 
 
