@@ -14,6 +14,8 @@ def backtest(positions, spread, df, gamma):
 
     return {
         'total_pnl': equity.iloc[-1],
+        'gross_pnl': gross.dropna().sum(),
+        'costs': costs.loc[pnl.index].sum(),
         'sharpe': sharpe,
         'max_drawdown': mdd,
         'equity': equity,
