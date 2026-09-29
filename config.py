@@ -19,6 +19,7 @@ IBKR's short-sale-cost tool before trusting these defaults.
 # ---------------------------------------------------------------------------
 TRADING_DAYS_PER_YEAR = 252   # annualization factor for Sharpe
 BORROW_DAY_COUNT = 360        # IBKR accrues borrow fees on a 360-day basis
+UNIT_SIZE = 1000              # shares of the dependent leg per position (indep leg = gamma * UNIT_SIZE)
 
 # ---------------------------------------------------------------------------
 # Per-leg cost model

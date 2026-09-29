@@ -74,3 +74,13 @@ def drawdown_duration(equity):
     underwater = equity < equity.cummax()
     groups = (~underwater).cumsum()
     return underwater.groupby(groups).sum().max()
+
+
+def mae(spread, trades):
+    out = []
+    for _, t in trades.iterrows():
+        window = spread.loc[t['entry_date']:t['exit_date']]
+        path = t['direction'] * (window - window.iloc[0])
+        out.append(path.min())
+    return pd.Series(out, index=trades.index)
+

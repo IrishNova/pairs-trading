@@ -39,10 +39,3 @@ def screen_pair(df):
         'half_life': half_life,
     }
 
-
-
-# for dev only
-from data import fetch_raw_data
-
-df = fetch_raw_data(('AAPL', 'MSFT'), period='3y')
-print(screen_pair(df))
