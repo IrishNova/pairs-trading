@@ -20,6 +20,9 @@ IBKR's short-sale-cost tool before trusting these defaults.
 TRADING_DAYS_PER_YEAR = 252   # annualization factor for Sharpe
 BORROW_DAY_COUNT = 360        # IBKR accrues borrow fees on a 360-day basis
 UNIT_SIZE = 1000              # shares of the dependent leg per position (indep leg = gamma * UNIT_SIZE)
+DEV_FRAC = 0.6                # fraction of history used for selection/dev; the rest is a held-out OOS slice
+EG_GATE = 0.05                # max Engle-Granger p-value for a pair to qualify
+HALF_LIFE_MAX = 60            # max mean-reversion half-life (days) to be tradeable; slower pairs are rejected
 
 # Stage 1: candidate universe screened for prospects. Stage 2: the ones selected
 # for full validation (in-sample backtest + walk-forward).
@@ -36,7 +39,7 @@ CANDIDATE_PAIRS = [
 ]
 
 PROSPECTS = [
-    ("PM", "MO"),
+    ("WM", "RSG"),
 ]
 
 # ---------------------------------------------------------------------------
@@ -51,6 +54,18 @@ PROSPECTS = [
 # borrow_rate_annual   : annualized stock-loan fee, charged ONLY while the leg is
 #                        short, accrued daily over BORROW_DAY_COUNT. ~0.25-0.50%
 #                        for liquid General-Collateral names like PM/MO — VERIFY LIVE.
+# Default applied to any ticker not explicitly overridden below (all US/IBKR legs
+# share these assumptions; add a ticker to COST_CONFIG only to override, e.g. a
+# non-US venue with its own commission / FTT / borrow rate).
+DEFAULT_LEG_COST = {
+    "venue": "US",
+    "commission_per_share": 0.0035,
+    "min_commission": 0.35,
+    "max_commission_pct": 0.01,
+    "half_spread": 0.01,
+    "borrow_rate_annual": 0.005,
+}
+
 COST_CONFIG = {
     "PM": {
         "venue": "US",

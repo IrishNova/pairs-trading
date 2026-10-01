@@ -41,7 +41,8 @@ def semi_deviation(pnl, mar=0.0):
 
 
 def sharpe(pnl, rf=0.0):
-    return np.sqrt(TRADING_DAYS_PER_YEAR) * (pnl.mean() - rf) / pnl.std()
+    std = pnl.std()
+    return np.sqrt(TRADING_DAYS_PER_YEAR) * (pnl.mean() - rf) / std if std > 0 else 0.0
 
 
 def sortino(pnl, mar=0.0):

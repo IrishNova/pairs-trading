@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from config import TRADING_DAYS_PER_YEAR, COST_CONFIG, BORROW_DAY_COUNT, UNIT_SIZE
+from config import TRADING_DAYS_PER_YEAR, COST_CONFIG, DEFAULT_LEG_COST, BORROW_DAY_COUNT, UNIT_SIZE
 
 def backtest(positions, spread, df, gamma):
     gross = positions.shift(1) * spread.diff() * UNIT_SIZE
@@ -9,7 +9,8 @@ def backtest(positions, spread, df, gamma):
 
     equity = pnl.cumsum()
 
-    sharpe = np.sqrt(TRADING_DAYS_PER_YEAR) * pnl.mean() / pnl.std()
+    std = pnl.std()
+    sharpe = np.sqrt(TRADING_DAYS_PER_YEAR) * pnl.mean() / std if std > 0 else 0.0
     mdd = (equity - equity.cummax()).min()
 
     return {
@@ -26,7 +27,8 @@ def backtest(positions, spread, df, gamma):
 def transaction_cost(position, df, gamma):
     indep, dep = df.columns[0], df.columns[1]
     px_indep, px_dep = df.iloc[:, 0], df.iloc[:, 1]
-    cfg_i, cfg_d = COST_CONFIG[indep], COST_CONFIG[dep]
+    cfg_i = COST_CONFIG.get(indep, DEFAULT_LEG_COST)
+    cfg_d = COST_CONFIG.get(dep, DEFAULT_LEG_COST)
 
     shares_i, shares_d = gamma * UNIT_SIZE, UNIT_SIZE
 
